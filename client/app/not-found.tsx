@@ -1,5 +1,5 @@
 import CustomButton from "@/components/common/customButton";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const NotFound = () => {
   return (
