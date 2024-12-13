@@ -1,6 +1,9 @@
 "use client";
 import Image from "next/image";
-import { Box, Button, Typography, Container } from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
+import BackgroundOverlay from "@/components/common/backgroundOverlay";
+import NavBar from "@/components/common/navBar";
+import Footer from "@/components/common/footer";
 
 export default function About() {
   return (
@@ -8,77 +11,13 @@ export default function About() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: "space-between",
         minHeight: "100vh",
-        backgroundImage: "url('/landing1.jpg')", // Background image for the About page
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        color: "white",
-        textAlign: "center",
-        padding: 0,
         position: "relative",
       }}
     >
-      {/* Overlay for darkening the background image */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          background: "rgba(0, 0, 0, 0.5)",
-          zIndex: 1,
-        }}
-      />
-
-      {/* Top Left: Logo */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: 16,
-          left: { md: 30, xs: 1 },
-          zIndex: 2,
-        }}
-      >
-        <Image
-          src="/logo2.png"
-          alt="Campus Connect Logo"
-          width={300}
-          height={100}
-        />
-      </Box>
-
-      {/* Top Right: Back to Home Button */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: { md: 16, xs: 24 },
-          right: { md: 30, xs: 18 },
-          zIndex: 2,
-        }}
-      >
-        <Button
-          variant="outlined"
-          color="primary"
-          href="/"
-          sx={{
-            textTransform: "none",
-            fontSize: "1rem",
-            color: "white",
-            borderColor: "white",
-            borderRadius: "20px",
-            "&:hover": {
-              backgroundColor: "white",
-              color: "#E50914",
-              borderColor: "#E50914",
-            },
-          }}
-        >
-          Home
-        </Button>
-      </Box>
+      <BackgroundOverlay />
+      <NavBar buttonLabel="Home" link="/" />
 
       {/* About Us Content */}
       <Container
@@ -91,6 +30,7 @@ export default function About() {
           display: "flex",
           flexDirection: { xs: "column", md: "row" }, // Stack on small screens, row on medium and larger screens
           alignItems: "center",
+          pb: 10,
         }}
       >
         {/* Image Section */}
@@ -116,7 +56,7 @@ export default function About() {
           sx={{
             flex: 1,
             padding: { xs: "0 20px", md: "0 50px" }, // Add padding for text on larger screens
-            textAlign: { xs: "center", md: "left" },
+            textAlign: { xs: "left", md: "left" },
           }}
         >
           <Typography
@@ -127,10 +67,11 @@ export default function About() {
               letterSpacing: "-1px",
               color: "white",
               marginBottom: "20px",
+              textAlign: { xs: "left", md: "left" },
               fontFamily: "Arial, sans-serif",
             }}
           >
-            About Campus Connect
+            About CampusConnect
           </Typography>
 
           <Typography
@@ -190,6 +131,8 @@ export default function About() {
           </Box>
         </Box>
       </Container>
+
+      <Footer />
     </Box>
   );
 }
