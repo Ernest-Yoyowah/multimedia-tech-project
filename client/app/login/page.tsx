@@ -1,8 +1,15 @@
 "use client";
 import Image from "next/image";
-import { Button, Box, Typography, Container } from "@mui/material";
+import {
+  Button,
+  Box,
+  Typography,
+  Container,
+  Grid,
+  TextField,
+} from "@mui/material";
 
-export default function Home() {
+export default function Login() {
   return (
     <Box
       sx={{
@@ -38,7 +45,7 @@ export default function Home() {
         sx={{
           position: "absolute",
           top: 16,
-          left: { md: 30, xs: 0 },
+          left: { md: 30, xs: 1 },
           zIndex: 2,
         }}
       >
@@ -50,7 +57,7 @@ export default function Home() {
         />
       </Box>
 
-      {/* Top Right: Button or other element */}
+      {/* Top Right: About Us button */}
       <Box
         sx={{
           position: "absolute",
@@ -86,7 +93,7 @@ export default function Home() {
           position: "relative",
           zIndex: 2,
           padding: "0 16px",
-          maxWidth: "lg",
+          maxWidth: "sm",
         }}
       >
         <Typography
@@ -98,81 +105,110 @@ export default function Home() {
             color: "white",
           }}
         >
-          Welcome to Campus Connect
+          Welcome Back
         </Typography>
 
-        <Box sx={{ my: 3 }}>
-          <Typography
-            variant="h6"
-            sx={{
-              marginTop: 2,
-              color: "rgba(255, 255, 255, 0.8)",
-              fontSize: { xs: "1rem", sm: "1.2rem" },
-              lineHeight: 1.5,
-              maxWidth: "600px",
-              margin: "0 auto",
-            }}
-          >
-            Discover exciting content, connect with others, and start your
-            journey today. Sign in or register to begin exploring.
-          </Typography>
-        </Box>
-
-        {/* Flex Container for Buttons */}
-        <Box
+        <Typography
+          variant="h6"
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 2,
-            marginTop: 4,
+            color: "rgba(255, 255, 255, 0.8)",
+            fontSize: { xs: "1rem", sm: "1.2rem" },
+            lineHeight: 1.5,
+            maxWidth: "600px",
+            margin: "20px auto",
           }}
         >
-          <Box>
+          Please sign in to continue and explore more on Campus Connect.
+        </Typography>
+
+        <Box
+          sx={{
+            marginTop: 4,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            maxWidth: "400px",
+            width: "100%",
+            margin: "0 auto",
+          }}
+        >
+          {/* Email Input */}
+          <TextField
+            label="Email Address"
+            variant="outlined"
+            fullWidth
+            sx={{
+              backgroundColor: "white",
+              borderRadius: "10px",
+              "& .MuiInputBase-root": {
+                color: "black",
+              },
+            }}
+          />
+          {/* Password Input */}
+          <TextField
+            label="Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            sx={{
+              backgroundColor: "white",
+              borderRadius: "10px",
+              "& .MuiInputBase-root": {
+                color: "black",
+              },
+            }}
+          />
+        </Box>
+
+        {/* Login Button */}
+        <Box
+          sx={{
+            marginTop: 4,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            sx={{
+              width: "200px",
+              padding: "16px 32px",
+              fontSize: "1.2rem",
+              borderRadius: "50px",
+              textTransform: "none",
+              backgroundColor: "#E50914",
+              "&:hover": {
+                backgroundColor: "#F40612",
+              },
+            }}
+          >
+            Login
+          </Button>
+        </Box>
+
+        <Grid
+          container
+          spacing={2}
+          sx={{ marginTop: 2, justifyContent: "center" }}
+        >
+          <Grid item>
             <Button
-              variant="contained"
+              variant="text"
               color="primary"
-              size="large"
-              href="/login"
-              sx={{
-                width: "200px",
-                padding: "16px 32px",
-                fontSize: "1.2rem",
-                borderRadius: "50px",
-                textTransform: "none",
-                backgroundColor: "#E50914",
-                "&:hover": {
-                  backgroundColor: "#F40612",
-                },
-              }}
-            >
-              Login
-            </Button>
-          </Box>
-          <Box>
-            <Button
-              variant="outlined"
-              color="primary"
-              size="large"
               href="/register"
               sx={{
-                width: "200px",
-                padding: "16px 32px",
-                fontSize: "1.2rem",
-                borderRadius: "50px",
-                borderColor: "white",
                 textTransform: "none",
                 color: "white",
-                "&:hover": {
-                  backgroundColor: "white",
-                  color: "#E50914",
-                  borderColor: "#E50914",
-                },
+                fontSize: "1rem",
               }}
             >
-              Register
+              Don&apos;t have an account? Register
             </Button>
-          </Box>
-        </Box>
+          </Grid>
+        </Grid>
       </Container>
 
       {/* Footer */}
