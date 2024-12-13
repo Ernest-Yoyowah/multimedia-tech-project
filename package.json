@@ -1,0 +1,33 @@
+{
+  "name": "multimedia-tech-project",
+  "version": "1.0.0",
+  "description": "social media app",
+  "main": "server/app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ernest-Yoyowah/multimedia-tech-project.git"
+  },
+  "author": "aj and Ernest",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ernest-Yoyowah/multimedia-tech-project/issues"
+  },
+  "homepage": "https://github.com/Ernest-Yoyowah/multimedia-tech-project#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie": "^1.0.2",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "generate-unique-id": "^2.0.3",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
