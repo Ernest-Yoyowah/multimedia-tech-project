@@ -2,26 +2,29 @@ import { Button } from "@mui/material";
 
 interface CustomButtonProps {
   label: string;
-  link: string;
+  link?: string;
   variant?: "contained" | "outlined";
+  type?: "button" | "submit" | "reset"; // Add `type` property
 }
 
 export default function CustomButton({
   label,
   link,
   variant = "contained",
+  type = "button", // Default to "button"
 }: CustomButtonProps) {
   const isOutlined = variant === "outlined";
 
   return (
     <Button
+      type={type} // Pass the `type` prop to the button
       variant={isOutlined ? "outlined" : "contained"}
       color="primary"
       size="large"
       href={link}
       sx={{
-        width: "200px",
-        padding: "16px 32px",
+        width: "140px",
+        padding: "10px 32px",
         fontSize: "1.2rem",
         borderRadius: "50px",
         textTransform: "none",

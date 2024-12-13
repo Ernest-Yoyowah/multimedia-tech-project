@@ -1,13 +1,21 @@
-import { TextField, Typography } from "@mui/material";
+import { TextField, Typography, FormHelperText } from "@mui/material";
 
 interface InputFieldProps {
   label: string;
   type?: string;
+  value: string; // Add `value` prop
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; // Add `onChange` prop
+  error?: boolean; // Add `error` prop to show error state
+  helperText?: string; // Add `helperText` prop to display error message
 }
 
 export const InputField: React.FC<InputFieldProps> = ({
   label,
   type = "text",
+  value,
+  onChange,
+  error = false, // Default value is `false`
+  helperText = "", // Default value is an empty string
 }) => {
   return (
     <>
@@ -16,8 +24,11 @@ export const InputField: React.FC<InputFieldProps> = ({
       </Typography>
       <TextField
         type={type}
+        value={value} // Bind `value` prop
+        onChange={onChange} // Bind `onChange` prop
         variant="outlined"
         fullWidth
+        error={error} // Pass `error` prop to highlight the input field when error is true
         InputLabelProps={{
           shrink: false, // Do not shrink the label when the field is focused
         }}
@@ -61,6 +72,11 @@ export const InputField: React.FC<InputFieldProps> = ({
           },
         }}
       />
+      {error && helperText && (
+        <FormHelperText error sx={{ marginTop: "4px" }}>
+          {helperText}
+        </FormHelperText>
+      )}
     </>
   );
 };

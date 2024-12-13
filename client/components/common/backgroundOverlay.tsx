@@ -9,10 +9,10 @@ export default function BackgroundOverlay() {
         left: 0,
         width: "100%",
         height: "100%",
-        backgroundImage: "url('/landing1.jpg')", // Add the background image here
+        backgroundImage: "url('/landing1.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        zIndex: -1, // Ensure it stays behind content
+        zIndex: -1,
         "&::after": {
           content: '""',
           position: "absolute",
@@ -20,7 +20,7 @@ export default function BackgroundOverlay() {
           left: 0,
           width: "100%",
           height: "100%",
-          backgroundColor: "rgba(0, 0, 0, 0.5)", // Overlay color
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
         },
       }}
     />
