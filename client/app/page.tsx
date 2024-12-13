@@ -29,6 +29,7 @@ export default function Home() {
   return (
     <Box
       sx={{
+        width: "100%",
         position: "relative",
         minHeight: "100vh",
         color: "white",

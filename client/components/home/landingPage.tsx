@@ -25,17 +25,17 @@ export default function LandingPage({
       sx={{
         textAlign: "center",
         zIndex: 2,
-        padding: "0 16px",
-        maxWidth: "lg",
+        mx: 2,
       }}
     >
       <Typography
         variant="h2"
         sx={{
           fontWeight: "bold",
-          fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4rem" },
+          fontSize: { xs: "2rem", sm: "3.5rem", md: "4rem" },
           letterSpacing: "-1px",
           color: "white",
+          my: 3,
         }}
       >
         {title}

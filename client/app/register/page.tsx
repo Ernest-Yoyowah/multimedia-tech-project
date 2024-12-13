@@ -1,10 +1,14 @@
+"use client";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import InputField from "@/components/auth/inputField";
 import BackgroundOverlay from "@/components/common/backgroundOverlay";
 import NavBar from "@/components/common/navBar";
 import CustomButton from "@/components/common/customButton";
+import { useRegister } from "@/hooks/useRegister";
 
 export default function Register() {
+  const { formData, handleChange, handleSubmit, errors } = useRegister();
+
   return (
     <Box
       sx={{
@@ -27,14 +31,17 @@ export default function Register() {
           color: "white",
           marginTop: { md: 16, xs: 20 },
         }}
+        component="form"
+        onSubmit={handleSubmit}
       >
         <Typography
           variant="h2"
           sx={{
             fontWeight: "bold",
-            fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4rem" },
+            fontSize: { xs: "2rem", sm: "3.5rem", md: "4rem" },
             letterSpacing: "-1px",
             color: "white",
+            my: 3,
           }}
         >
           Create Your Account
@@ -66,12 +73,50 @@ export default function Register() {
             margin: "0 auto",
           }}
         >
-          <InputField label="Full Name" />
-          <InputField label="Phone Number" />
-          <InputField label="Username" />
-          <InputField label="Email Address" />
-          <InputField label="Password" type="password" />
-          <InputField label="Confirm Password" type="password" />
+          <InputField
+            label="Full Name"
+            value={formData.fullName}
+            onChange={(e) => handleChange("fullName", e.target.value)}
+            error={!!errors.fullName} // Check if there's an error for this field
+            helperText={errors.fullName} // Pass the error message
+          />
+          <InputField
+            label="Phone Number"
+            value={formData.phoneNumber}
+            onChange={(e) => handleChange("phoneNumber", e.target.value)}
+            error={!!errors.phoneNumber} // Check if there's an error for this field
+            helperText={errors.phoneNumber} // Pass the error message
+          />
+          <InputField
+            label="Username"
+            value={formData.username}
+            onChange={(e) => handleChange("username", e.target.value)}
+            error={!!errors.username} // Check if there's an error for this field
+            helperText={errors.username} // Pass the error message
+          />
+          <InputField
+            label="Email Address"
+            value={formData.email}
+            onChange={(e) => handleChange("email", e.target.value)}
+            error={!!errors.email} // Check if there's an error for this field
+            helperText={errors.email} // Pass the error message
+          />
+          <InputField
+            label="Password"
+            type="password"
+            value={formData.password}
+            onChange={(e) => handleChange("password", e.target.value)}
+            error={!!errors.password} // Check if there's an error for this field
+            helperText={errors.password} // Pass the error message
+          />
+          <InputField
+            label="Confirm Password"
+            type="password"
+            value={formData.confirmPassword}
+            onChange={(e) => handleChange("confirmPassword", e.target.value)}
+            error={!!errors.confirmPassword} // Check if there's an error for this field
+            helperText={errors.confirmPassword} // Pass the error message
+          />
         </Box>
 
         <Box
@@ -81,7 +126,7 @@ export default function Register() {
             justifyContent: "center",
           }}
         >
-          <CustomButton label="Register" link="#" variant="contained" />
+          <CustomButton label="Register" type="submit" variant="contained" />
         </Box>
 
         <Grid
