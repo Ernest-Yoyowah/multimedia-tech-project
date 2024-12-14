@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken'
 import generateUniqueId from 'generate-unique-id'
 import * as crypto from "crypto";
 
+let id_array=[];
+
 const saltRounds=10;
 
 const mail_checks=(email)=>{
@@ -69,38 +71,42 @@ const pass_checks=(password)=>{
 
 const mail_isExist=(email)=>{
   //make checks in db
+  return true
 };
 
 
 
 const pass_isExist=(password)=>{
 
-  const salt = bcrypt.genSaltSync(saltRounds);
-  const pass_hash = bcrypt.hashSync(password, salt);
+  //const salt = bcrypt.genSaltSync(saltRounds);
+  //const pass_hash = bcrypt.hashSync(password, salt);
 
   //load hash from db
-  db_hash;
+  //db_hash;
 
-  if(pass_hash==db_hash){
+  // if(pass_hash==db_hash){
 
-    return true;
+  //   return true;
 
-  } else{
+  // } else{
 
-    return false;
+  //   return false;
 
-  };
+  // };
+  return true;
 
 };
 
 
-const gen_id=()=>{
+const gen_id=(email)=>{
 
   const id = generateUniqueId({
     includeSymbols: ['@','#','|'],
     excludeSymbols: ['0'],
     length:15
   });
+
+  id_array.push({user_email:email,user_id:id});
 
     return id;
 };
@@ -133,6 +139,19 @@ const sign_token = async (id) => {
 };
 
 
+
+const get_id_from_db=(email)=>{
+
+  for(let i=0;i<id_array.length;i++){
+
+    if(id_array[i].user_email == email){
+      return id_array[i].user_id;
+    };
+
+  };
+
+};
+
   
   export default {
     mail_checks,
@@ -140,6 +159,7 @@ const sign_token = async (id) => {
     mail_isExist,
     pass_isExist,
     gen_id,
-    sign_token
+    sign_token,
+    get_id_from_db
   };
   
