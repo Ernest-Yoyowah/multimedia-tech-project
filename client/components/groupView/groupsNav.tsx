@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const GroupsNav = ({ notices = 0 }) => {
-  const [unreadNotifications, setUnreadNotifications] = useState(notices);
+  const [unreadNotifications] = useState(notices);
 
   return (
     <>

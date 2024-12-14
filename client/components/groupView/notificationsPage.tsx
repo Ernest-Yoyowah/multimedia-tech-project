@@ -13,14 +13,23 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"; // Import the back ic
 import { dummyNotifications } from "@/db/notifications";
 import Link from "next/link";
 
+interface Notification {
+  id: number;
+  title: string;
+  description: string;
+  badge?: string;
+  body?: string;
+  dir?: string;
+}
+
 export default function NotificationsPage() {
-  const [notifications, setNotifications] = useState(dummyNotifications);
+  const [notifications] = useState(dummyNotifications);
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string }>({
     open: false,
     message: "",
   });
 
-  const handleNotificationClick = (notification) => {
+  const handleNotificationClick = (notification: Notification) => {
     setSnackbar({
       open: true,
       message: `You clicked on: ${notification.title}`,

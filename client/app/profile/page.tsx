@@ -185,7 +185,6 @@ const UserProfile = () => {
               <Grid item xs={12} sm={6}>
                 <InputField
                   label="Name"
-                  name="name"
                   value={userDetails.name}
                   onChange={handleInputChange}
                 />
@@ -193,7 +192,6 @@ const UserProfile = () => {
               <Grid item xs={12} sm={6}>
                 <InputField
                   label="Email"
-                  name="email"
                   value={userDetails.email}
                   onChange={handleInputChange}
                 />
@@ -201,7 +199,6 @@ const UserProfile = () => {
               <Grid item xs={12}>
                 <InputField
                   label="Description"
-                  name="description"
                   value={userDetails.description}
                   onChange={handleInputChange}
                 />
@@ -209,7 +206,6 @@ const UserProfile = () => {
               <Grid item xs={12}>
                 <InputField
                   label="Skills"
-                  name="skills"
                   value={userDetails.skills}
                   onChange={handleInputChange}
                 />
@@ -222,7 +218,6 @@ const UserProfile = () => {
               <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
                 <InputField
                   label="Twitter"
-                  name="twitter"
                   value={userDetails.socialLinks.twitter}
                   onChange={(e) =>
                     setUserDetails((prev) => ({
@@ -236,7 +231,6 @@ const UserProfile = () => {
                 />
                 <InputField
                   label="LinkedIn"
-                  name="linkedin"
                   value={userDetails.socialLinks.linkedin}
                   onChange={(e) =>
                     setUserDetails((prev) => ({
