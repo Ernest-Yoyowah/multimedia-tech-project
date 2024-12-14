@@ -5,6 +5,8 @@ interface CustomButtonProps {
   link?: string;
   variant?: "contained" | "outlined";
   type?: "button" | "submit" | "reset"; // Add `type` property
+  onClick?: () => void;
+  width?: string | number;
 }
 
 export default function CustomButton({
@@ -12,6 +14,8 @@ export default function CustomButton({
   link,
   variant = "contained",
   type = "button", // Default to "button"
+  onClick,
+  width = "140px",
 }: CustomButtonProps) {
   const isOutlined = variant === "outlined";
 
@@ -22,8 +26,9 @@ export default function CustomButton({
       color="primary"
       size="large"
       href={link}
+      onClick={onClick}
       sx={{
-        width: "140px",
+        width: width,
         padding: "10px 32px",
         fontSize: "1.2rem",
         borderRadius: "50px",

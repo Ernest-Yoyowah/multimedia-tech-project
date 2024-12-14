@@ -63,7 +63,7 @@ export default function About() {
             variant="h2"
             sx={{
               fontWeight: "bold",
-              fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4rem" },
+              fontSize: { xs: "2rem", sm: "3.5rem", md: "4rem" },
               letterSpacing: "-1px",
               color: "white",
               marginBottom: "20px",
