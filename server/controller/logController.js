@@ -21,17 +21,19 @@ const new_log_control = async (req, res) => {
 
     if (log_mail_checks.isValid !== false && log_pass_checks.isValid !== false) {
         try {
-            const user_id = log_service.gen_id(email);
+            const user_id = log_service.gen_id(email,password);
     
-            const token = await log_service.sign_token(user_id);
+            //const token = await log_service.sign_token(user_id);
     
-            res.cookie('auth_token', token, cookieOptions);
-    
+            //res.cookie('auth_token', token, cookieOptions);
+    console.log(user_id);
             return res.json({
                 email: log_mail_checks,
                 password: log_pass_checks,
                 message: 'Authentication successful',
+                user_id: user_id
             });
+
     
         } catch (error) {
 
@@ -56,14 +58,14 @@ const old_log_control= async (req,res)=>{
     let pass_check=log_service.pass_isExist(password);
     
     if(mail_check == true && pass_check == true){
-        //get user_id associated with this gmail and pass
+
         const user_id=log_service.get_id_from_db(email);
 
-        const token = await log_service.sign_token(user_id);
+        // const token = await log_service.sign_token(user_id);
 
-        res.cookie('auth_token', token, cookieOptions);
+        // res.cookie('auth_token', token, cookieOptions);
 
-        return res.json({isLoggedIn:true})
+        return res.json({isLoggedIn:true,user_id});
 
     } else{
 

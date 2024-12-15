@@ -70,8 +70,15 @@ const pass_checks=(password)=>{
 
 
 const mail_isExist=(email)=>{
-  //make checks in db
-  return true
+
+  for(let i=0;i<id_array.length;i++){
+    if(id_array[i].email==email){
+      return true
+    }
+  };
+
+  return false;
+
 };
 
 
@@ -93,12 +100,19 @@ const pass_isExist=(password)=>{
   //   return false;
 
   // };
-  return true;
+
+  for(let i=0;i<id_array.length;i++){
+    if(id_array[i].password==password){
+      return true
+    }
+  }
+
+  return false;
 
 };
 
 
-const gen_id=(email)=>{
+const gen_id=(email,password)=>{
 
   const id = generateUniqueId({
     includeSymbols: ['@','#','|'],
@@ -106,45 +120,77 @@ const gen_id=(email)=>{
     length:15
   });
 
-  id_array.push({user_email:email,user_id:id});
+  if(email && password){
+    id_array.push({email:email,user_id:id,password:password});
+  }
 
     return id;
 };
 
 
 
-const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
-  modulusLength: 2048,
-  publicKeyEncoding: { type: "spki", format: "pem" },
-  privateKeyEncoding: { type: "pkcs8", format: "pem" },
-});
+// const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+//   modulusLength: 2048,
+//   publicKeyEncoding: { type: "spki", format: "pem" },
+//   privateKeyEncoding: { type: "pkcs8", format: "pem" },
+// });
 
 
 
 const sign_token = async (id) => {
-  return new Promise((resolve, reject) => {
-    jwt.sign(
-      { user_id: id },
-      privateKey,
-      { algorithm: 'RS256' },
-      (err, token) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(token);
-        }
-      }
-    );
-  });
+  // console.log(id);
+  // return new Promise((resolve, reject) => {
+  //   jwt.sign(
+  //     { user_id: id },
+  //     privateKey,
+  //     { algorithm: 'RS256' },
+  //     (err, token) => {
+  //       if (err) {
+  //         reject(err);
+  //       } else {
+  //         resolve(token);
+  //       }
+  //     }
+  //   );
+  // });
 };
 
+
+
+// const verify_token = async (token) => {
+//   return new Promise((resolve, reject) => {
+//     jwt.verify(
+//       token,
+//       publicKey,
+//       { algorithms: ['RS256'] },
+//       (err, decoded) => {
+//         if (err) {
+//           reject(err);
+//         } else {
+//           resolve(decoded.user_id);
+//         }
+//       }
+//     );
+//   });
+// };
+
+
+const id_verify = (id) =>{
+
+  for(let i=0;i<id_array.length;i++){
+      if(id_array[i].user_id==id){
+        return true;
+      }
+  }
+  return false;
+};
 
 
 const get_id_from_db=(email)=>{
 
   for(let i=0;i<id_array.length;i++){
 
-    if(id_array[i].user_email == email){
+    if(id_array[i].email == email){
       return id_array[i].user_id;
     };
 
@@ -160,6 +206,7 @@ const get_id_from_db=(email)=>{
     pass_isExist,
     gen_id,
     sign_token,
-    get_id_from_db
+    get_id_from_db,
+    id_verify
   };
   
