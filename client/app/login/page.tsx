@@ -4,8 +4,18 @@ import LoginForm from "@/components/auth/loginForm";
 import BackgroundOverlay from "@/components/common/backgroundOverlay";
 import NavBar from "@/components/common/navBar";
 import { Box, Typography, Container } from "@mui/material";
+import { useEffect, useState } from "react";
 
 export default function Login() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
   return (
     <Box
       sx={{

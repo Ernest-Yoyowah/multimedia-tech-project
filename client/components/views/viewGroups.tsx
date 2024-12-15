@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -27,17 +27,26 @@ export default function ViewGroups() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [joinModalOpen, setJoinModalOpen] = useState(false);
   const [newGroup, setNewGroup] = useState({ name: "", description: "" });
+  const [view, setView] = useState<"all" | "my">("all");
 
   const handleGroupClick = (group: Group) => {
     if (!group.members.includes(currentUser)) {
       setJoinModalOpen(true);
     } else {
-      setSnackbar({
-        open: true,
-        message: `Welcome to the "${group.name}" group!`,
-      });
+      // Navigate to the group page using Next.js Link
+      window.location.href = `/group/${group.id}`;
     }
   };
+
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   const handleCreateGroup = () => {
     setCreateModalOpen(true);
@@ -62,30 +71,81 @@ export default function ViewGroups() {
     }
   };
 
+  // Filter groups based on the selected view
+  const filteredGroups =
+    view === "all"
+      ? groups
+      : groups.filter((group) => group.admin === currentUser);
+
   return (
     <Box sx={{ backgroundColor: "#141414", color: "#fff", minHeight: "100vh" }}>
       {/* Header */}
       <GroupsNav notices={dummyNotifications.length} />
 
-      {/* Content */}
-      <Box sx={{ py: 4, px: 2 }}>
+      {/* Top Buttons */}
+      <Box sx={{ mt: 2, width: "100%" }}>
         <Box
           sx={{
             display: "flex",
+            gap: 2,
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: 4,
+            mx: 2,
+            px: "5px",
+            py: "7px",
+            backgroundColor: "#242424",
+            borderRadius: "10px",
           }}
         >
-          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-            Groups
-          </Typography>
-          <CustomButton
-            label="Create Group"
-            onClick={handleCreateGroup}
-            width="200px"
-          />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: view === "all" ? "#141414" : "transparent",
+              width: "48%",
+              borderRadius: "5px",
+              height: "48px",
+              cursor: "pointer",
+            }}
+            onClick={() => setView("all")}
+          >
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                color: view === "all" ? "#fff" : "#bbb",
+              }}
+            >
+              All Groups
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: view === "my" ? "#141414" : "transparent",
+              width: "48%",
+              borderRadius: "5px",
+              height: "48px",
+              cursor: "pointer",
+            }}
+            onClick={() => setView("my")}
+          >
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                color: view === "my" ? "#fff" : "#bbb",
+              }}
+            >
+              My Groups
+            </Typography>
+          </Box>
         </Box>
+      </Box>
+
+      {/* Groups Grid */}
+      <Box sx={{ py: 2, px: 2 }}>
         <Box
           sx={{
             display: "grid",
@@ -93,58 +153,75 @@ export default function ViewGroups() {
             gap: 2,
           }}
         >
-          {groups.map((group) => (
+          {filteredGroups.map((group) => (
             <Card
               key={group.id}
               sx={{
                 backgroundColor: "#242424",
                 color: "#fff",
-                borderRadius: "25px",
+                borderRadius: "10px",
+                cursor: "pointer", // Add this for a clear indication that the card is clickable
                 "&:hover": {
                   transform: "scale(1.05)",
                   transition: "transform 0.3s",
                 },
               }}
+              onClick={() => handleGroupClick(group)} // Move onClick to Card
             >
-              <Box onClick={() => handleGroupClick(group)}>
-                <CardContent>
-                  <Box
+              <CardContent>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 2,
+                    px: 1,
+                  }}
+                >
+                  <Avatar
+                    src={group.iconUrl ? group.iconUrl : undefined}
+                    alt={group.name}
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 2,
-                      padding: 2,
+                      width: 60,
+                      height: 60,
+                      bgcolor: "#333",
                     }}
                   >
-                    <Avatar
-                      src={group.iconUrl ? group.iconUrl : undefined}
-                      alt={group.name}
-                      sx={{
-                        width: 60,
-                        height: 60,
-                        bgcolor: "#333",
-                      }}
-                    >
-                      {!group.iconUrl && <GroupIcon />}
-                    </Avatar>
+                    {!group.iconUrl && <GroupIcon />}
+                  </Avatar>
 
-                    <Box>
-                      <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                        {group.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "#bbb", marginTop: 1 }}
-                      >
-                        {group.description}
-                      </Typography>
-                    </Box>
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      {group.name}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#bbb", marginTop: 1 }}
+                    >
+                      {group.description}
+                    </Typography>
                   </Box>
-                </CardContent>
-              </Box>
+                </Box>
+              </CardContent>
             </Card>
           ))}
         </Box>
+      </Box>
+
+      {/* Create Group Button */}
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: "40px",
+          display: "flex",
+          justifyContent: "center",
+          width: "100%",
+        }}
+      >
+        <CustomButton
+          label="+ Create Group"
+          onClick={handleCreateGroup}
+          width="220px"
+        />
       </Box>
 
       {/* Create Group Modal */}
@@ -178,6 +255,21 @@ export default function ViewGroups() {
           </Box>
         </Box>
       </Modal>
+
+      {/* Snackbar for alerts */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ open: false, message: "" })}
+        message={snackbar.message}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        sx={{
+          "& .MuiSnackbarContent-root": {
+            backgroundColor: "#333",
+            color: "#fff",
+          },
+        }}
+      />
 
       {/* Join Request Modal */}
       <Modal open={joinModalOpen} onClose={() => setJoinModalOpen(false)}>
@@ -214,21 +306,6 @@ export default function ViewGroups() {
           </Box>
         </Box>
       </Modal>
-
-      {/* Snackbar for alerts */}
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={3000}
-        onClose={() => setSnackbar({ open: false, message: "" })}
-        message={snackbar.message}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        sx={{
-          "& .MuiSnackbarContent-root": {
-            backgroundColor: "#333",
-            color: "#fff",
-          },
-        }}
-      />
     </Box>
   );
 }
