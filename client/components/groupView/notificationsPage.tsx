@@ -86,7 +86,7 @@ export default function NotificationsPage() {
                       display: "flex",
                       alignItems: "center",
                       gap: 2,
-                      padding: 2,
+                      px: 2,
                     }}
                   >
                     <NotificationIcon sx={{ fontSize: 40, color: "#fff" }} />

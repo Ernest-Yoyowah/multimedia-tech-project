@@ -1,27 +1,35 @@
 "use client";
-import React, { useState } from "react";
-import { Box, Avatar, Typography, IconButton, Grid } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Avatar, Typography, Grid } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import InputField from "@/components/auth/inputField"; // Assuming the InputField component is in the same folder
-import CustomButton from "@/components/common/customButton"; // Assuming the CustomButton component is in the same folder
+import InputField from "@/components/auth/inputField";
+import CustomButton from "@/components/common/customButton";
 import Link from "next/link";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"; // Import the back icon
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const UserProfile = () => {
   const [userDetails, setUserDetails] = useState({
-    name: "John Doe",
-    email: "johndoe@example.com",
+    name: "Group 2",
+    email: "group2@multimedia.com",
     profilePicture: "/profile-placeholder.png",
-    description: "Software engineer passionate about front-end development.",
-    skills: "JavaScript, React, Node.js, TypeScript",
+    description: "Software engineering group 2",
+    skills: "Multimedia Technologies Project Work",
     socialLinks: {
       twitter: "https://twitter.com/johndoe",
       linkedin: "https://linkedin.com/in/johndoe",
     },
   });
+  const [isEditing, setIsEditing] = useState(false);
 
-  const [isEditing, setIsEditing] = useState(false); // State to toggle edit mode
+  const [isMounted, setIsMounted] = useState(false);
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setUserDetails((prev) => ({ ...prev, [name]: value }));
@@ -44,9 +52,8 @@ const UserProfile = () => {
   };
 
   const handleSave = () => {
-    // Logic to update user details (e.g., make an API call)
     console.log("User details updated:", userDetails);
-    setIsEditing(false); // Exit edit mode after saving
+    setIsEditing(false);
   };
 
   return (
@@ -59,6 +66,7 @@ const UserProfile = () => {
         flexDirection: "column",
         alignItems: "center",
         py: 5,
+        px: 2,
       }}
     >
       {/* Header */}
@@ -68,16 +76,14 @@ const UserProfile = () => {
           alignItems: "center",
           width: "100%",
           justifyContent: "flex-start",
-          py: 2,
-          px: 3,
-          borderBottom: "2px solid #e50914",
+          // py: 2,
+          // px: 3,
+          mb: 3,
         }}
       >
-        <IconButton sx={{ color: "#fff" }}>
-          <Link href="/browse-groups">
-            <ArrowBackIcon />
-          </Link>
-        </IconButton>
+        <Link href="/browse-groups">
+          <ArrowBackIcon />
+        </Link>
         <Typography variant="h4" sx={{ fontWeight: "bold", ml: 2 }}>
           My Profile
         </Typography>
@@ -88,7 +94,7 @@ const UserProfile = () => {
         sx={{
           backgroundColor: "#242424",
           width: "100%",
-          maxWidth: "600px",
+          maxWidth: "800px",
           borderRadius: "15px",
           padding: 4,
           mt: 3,
@@ -96,7 +102,7 @@ const UserProfile = () => {
         }}
       >
         {/* Profile Picture Section */}
-        <Box sx={{ textAlign: "center" }}>
+        <Box sx={{ textAlign: "center", mb: 3 }}>
           <Avatar
             sx={{
               width: 120,
@@ -152,7 +158,7 @@ const UserProfile = () => {
 
         {/* Displaying Profile Information or Edit Mode */}
         {!isEditing ? (
-          <Box sx={{ mt: 4 }}>
+          <Box sx={{ mt: 3 }}>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
               Name: {userDetails.name}
             </Typography>
@@ -180,7 +186,6 @@ const UserProfile = () => {
           </Box>
         ) : (
           <Box sx={{ mt: 4 }}>
-            {/* Edit Mode: Form to Edit Details */}
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <InputField
@@ -212,37 +217,42 @@ const UserProfile = () => {
               </Grid>
             </Grid>
 
-            {/* Social Links Section */}
             <Box sx={{ mt: 3 }}>
-              <Typography variant="h6">Social Links</Typography>
-              <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
-                <InputField
-                  label="Twitter"
-                  value={userDetails.socialLinks.twitter}
-                  onChange={(e) =>
-                    setUserDetails((prev) => ({
-                      ...prev,
-                      socialLinks: {
-                        ...prev.socialLinks,
-                        twitter: e.target.value,
-                      },
-                    }))
-                  }
-                />
-                <InputField
-                  label="LinkedIn"
-                  value={userDetails.socialLinks.linkedin}
-                  onChange={(e) =>
-                    setUserDetails((prev) => ({
-                      ...prev,
-                      socialLinks: {
-                        ...prev.socialLinks,
-                        linkedin: e.target.value,
-                      },
-                    }))
-                  }
-                />
-              </Box>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                Social Links
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <InputField
+                    label="Twitter"
+                    value={userDetails.socialLinks.twitter}
+                    onChange={(e) =>
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        socialLinks: {
+                          ...prev.socialLinks,
+                          twitter: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <InputField
+                    label="LinkedIn"
+                    value={userDetails.socialLinks.linkedin}
+                    onChange={(e) =>
+                      setUserDetails((prev) => ({
+                        ...prev,
+                        socialLinks: {
+                          ...prev.socialLinks,
+                          linkedin: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+                </Grid>
+              </Grid>
             </Box>
 
             {/* Save Button */}

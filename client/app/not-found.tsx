@@ -36,7 +36,7 @@ const NotFound = () => {
         Oops! The page you’re looking for doesn’t exist.
       </Typography>
 
-      <CustomButton label="Go Back to Home" link="/" />
+      <CustomButton label="Go Back to Home" link="/" width="300px" />
     </Box>
   );
 };
