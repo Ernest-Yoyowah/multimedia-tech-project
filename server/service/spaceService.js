@@ -1,3 +1,5 @@
+import fs from "fs";
+
 import log_service from "./logService.js"
 
 let space_ref=[];
@@ -48,12 +50,12 @@ const isSubUser=(s_id,user_id)=>{
 
 
 
-let create_space = (admin_id,space_name,space_img) =>{
+let create_space = (admin_id,space_name,fileByte) =>{
 
     try{
         const space_id=log_service.gen_id();
 
-        space_ref.push({space_name,space_id,space_img});
+        space_ref.push({space_name,space_id,fileByte});
 
         space_pool.push({admin_id,space_id,space_name,space_img,sub_users:[],space_ugc:[]});
 
@@ -67,9 +69,16 @@ let create_space = (admin_id,space_name,space_img) =>{
 
 };
 
-
+//{space_name,space_id,fileByte}
 
 const space = () =>{
+
+    let payload=[];
+
+    for(let i=0;i<space_ref.length;i++){
+        payload.push({space_name:space_ref[i].space_name,space_id:space_ref[i].space_id,profile_image:space_ref[i].fileByte.bytes.toString('base64')});
+    };
+
     return space_ref;
 };
 
@@ -104,7 +113,20 @@ const get_space_ugc=(s_id,u_id)=>{
     const isExist=space_isExist(s_id);
 
     if(isExist.isExist==true && (isAdmin(isExist.pos,uid)==true || isSubUser(s_id,u_id)==true)){
-        return space_pool[isExist.pos].space_ugc;
+
+        const ugc_payload=[];
+
+        for(let i=0;i<space_pool[isExist.pos].space_ugc.length;i++){
+
+            let ugc_payload_object={username:log_service.get_name(space_pool[isExist.pos].space_ugc[i].user_id),
+                                    user_id:space_pool[isExist.pos].space_ugc[i].user_id,
+                                    space_id:space_pool[isExist.pos].space_ugc[i].space_id,
+                                    ugc:{message:space_pool[isExist.pos].space_ugc[i].ugc.message , image_byte:space_pool[isExist.pos].space_ugc[i].ugc.image_byte.bytes.toString('base64')}};
+
+            ugc_payload.push(ugc_payload_object);
+        };
+
+        return ugc_payload;
     };
 
     return {};
@@ -134,7 +156,8 @@ const send_ugc=(s_id,u_id,content)=>{
     const isExist=space_isExist(s_id);
 
     if(isExist.isExist==true){
-        space_pool[isExist.pos].space_ugc.push({user_id:u_id,space_id:s_id,ugc:content});
+        //ugc.message ugc.image_byte
+        space_pool[isExist.pos].space_ugc.push({username:log_service.get_name(u_id),user_id:u_id,space_id:s_id,ugc:content});
         return true;
     };
 

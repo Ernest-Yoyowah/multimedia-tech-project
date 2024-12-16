@@ -21,7 +21,7 @@ const new_log_control = async (req, res) => {
 
     if (log_mail_checks.isValid !== false && log_pass_checks.isValid !== false) {
         try {
-            const user_id = log_service.gen_id(email,password);
+            const user_id = log_service.gen_id(email,password,name);
     
             //const token = await log_service.sign_token(user_id);
     

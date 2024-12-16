@@ -112,7 +112,7 @@ const pass_isExist=(password)=>{
 };
 
 
-const gen_id=(email,password)=>{
+const gen_id=(email,password,name)=>{
 
   const id = generateUniqueId({
     includeSymbols: ['@','#','|'],
@@ -121,7 +121,7 @@ const gen_id=(email,password)=>{
   });
 
   if(email && password){
-    id_array.push({email:email,user_id:id,password:password});
+    id_array.push({email:email,user_id:id,password:password,username:name});
   }
 
     return id;
@@ -198,6 +198,17 @@ const get_id_from_db=(email)=>{
 
 };
 
+
+const get_name=(id)=>{
+
+  for(let i=0;i<id_array.length;i++){
+    if(id_array[i].user_id==id){
+      return id_array[i].username;
+    }
+  }
+
+};
+
   
   export default {
     mail_checks,
@@ -207,6 +218,7 @@ const get_id_from_db=(email)=>{
     gen_id,
     sign_token,
     get_id_from_db,
-    id_verify
+    id_verify,
+    get_name
   };
   

@@ -1,5 +1,8 @@
+import multer from "multer";
+
 import space_operands from "./../service/spaceService.js";
 import auth from "./../middleware/auth_reader.js"
+
 
 const request_campus = (req,res) => {
 
@@ -9,7 +12,7 @@ const request_campus = (req,res) => {
         return res.status(404).json({message:"id is invalid"});
     };
 
-    return res.json(space_operands.campus);
+    return res.json(space_operands.space);
 
 };
 
@@ -21,9 +24,13 @@ const create_campus = (req,res) => {
         return res.status(404).json({message:"id is invalid"});
     };
 
-    const {space_name,space_img} = req.body;
+    if(req.file){
+        const fileBytes = req.file.buffer;
+    };
 
-    let isCreated=space_operands.create_space(user_id,space_name,space_img);
+    const {space_name} = req.body;
+
+    let isCreated=space_operands.create_space(user_id,space_name,fileByte);
 
     if(isCreated==true){
         return res.status(200).json({isCreated:isCreated});
@@ -58,7 +65,6 @@ const join_campus= (req,res) =>{
 
 
 
-
 const request_campus_specific=(req,res)=>{
     const user_id=req.query.user_id;
 
@@ -87,11 +93,15 @@ const send_ugc=(req,res)=>{
         return res.status(404).json({message:"id is invalid"});
     };
 
+    if(req.file){
+        const fileBytes = req.file.buffer;
+    };
+
     const space_id=req.query.space_id;
 
     let content=req.body;
 
-    let isSent=space_operands.send_ugc(space_id,user_id,content);
+    let isSent=space_operands.send_ugc(space_id,user_id,{message:content.message,image_byte:fileByte});
 
     if(isSent==true){
         return res.json({isSent:true});
