@@ -26,7 +26,7 @@ const new_log_control = async (req, res) => {
             //const token = await log_service.sign_token(user_id);
     
             //res.cookie('auth_token', token, cookieOptions);
-    console.log(user_id);
+
             return res.json({
                 email: log_mail_checks,
                 password: log_pass_checks,
