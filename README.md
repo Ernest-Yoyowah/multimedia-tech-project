@@ -87,40 +87,41 @@ expected request body - {
 
 
 
-**************************************************************************************************# Check snippet ******************************************
+**************************************************************************************************# http should use this snippet to send image ******************************************
 snippet example in which recieving image on the server side is base on
-document.getElementById("uploadForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
 
-  const imageInput = document.getElementById("imageInput");
-  const messageInput = document.getElementById("messageInput");
+const formData = new FormData();
+const imageFile = document.querySelector("input[type='file']").files[0]; // File input
+formData.append("image", imageFile);
 
-  const file = imageInput.files[0]; // Get the selected image file
-  const message = messageInput.value; // Get the message text
-
-  if (!file || !message) {
-    alert("Please provide both a message and an image.");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("image", file); // Append the image file
-  formData.append("message", message); // Append the message text
-
-  try {
-    const response = await fetch("http://localhost:5000/upload", {
-      method: "POST",
-      body: formData,
-    });
-
-    const result = await response.json();
-    console.log("Server response:", result);
-    alert("Upload successful!");
-  } catch (error) {
-    console.error("Error uploading:", error);
-    alert("Upload failed!");
-  }
+axios.post("http://localhost:3000/upload", formData, {
+    headers: {
+        "Content-Type": "multipart/form-data",
+    },
+})
+.then((response) => {
+    console.log("Image uploaded successfully:", response.data);
+})
+.catch((error) => {
+    console.error("Error uploading image:", error);
 });
+
+
+
+*******************************************snippet example for byte image rendeing in the front end**************
+function renderImageFromBytes(byteData) {
+    // Convert byte data to Base64
+    const base64Image = btoa(
+        Array.from(byteData)
+            .map(byte => String.fromCharCode(byte))
+            .join("")
+    );
+
+    // Create an <img> element and set the Base64 image
+    const img = document.createElement("img");
+    img.src = `data:image/png;base64,${base64Image}`; // Adjust MIME type if necessary
+    document.body.appendChild(img);
+}
 
 ***************************************************************************************# end of check snippet*************************************************
 
