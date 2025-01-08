@@ -19,8 +19,7 @@ const space_isExist=(space_id)=>{
 };
 
 
-
-const isAdmin=(pos,user_id)=>{
+const isAdmin=(space_id,user_id)=>{
 
         if(space_pool[pos].admin_id==user_id){
             return true;
@@ -50,14 +49,14 @@ const isSubUser=(s_id,user_id)=>{
 
 
 
-let create_space = (admin_id,space_name,fileByte) =>{
+let create_space = (admin_id,space_name,description,fileByte) =>{
 
     try{
         const space_id=log_service.gen_id();
 
         space_ref.push({space_name,space_id,fileByte});
 
-        space_pool.push({admin_id,space_id,space_name,space_img,sub_users:[],space_ugc:[]});
+        space_pool.push({admin_id:admin_id,space_id:space_id,space_name:space_name,description:description,fileByte:filebyte,sub_users:[],space_ugc:[]});
 
         return true;
 
@@ -112,21 +111,9 @@ const delete_space=(user_id,space_id)=>{
 const get_space_ugc=(s_id,u_id)=>{
     const isExist=space_isExist(s_id);
 
-    if(isExist.isExist==true && (isAdmin(isExist.pos,uid)==true || isSubUser(s_id,u_id)==true)){
+    if(isExist.isExist==true && (isAdmin(isExist.pos,u_id)==true || isSubUser(s_id,u_id)==true)){
 
-        const ugc_payload=[];
-
-        for(let i=0;i<space_pool[isExist.pos].space_ugc.length;i++){
-
-            let ugc_payload_object={username:log_service.get_name(space_pool[isExist.pos].space_ugc[i].user_id),
-                                    user_id:space_pool[isExist.pos].space_ugc[i].user_id,
-                                    space_id:space_pool[isExist.pos].space_ugc[i].space_id,
-                                    ugc:{message:space_pool[isExist.pos].space_ugc[i].ugc.message , image_byte:space_pool[isExist.pos].space_ugc[i].ugc.image_byte.bytes.toString('base64')}};
-
-            ugc_payload.push(ugc_payload_object);
-        };
-
-        return ugc_payload;
+        return space_pool[isExist.pos].space_ugc;
     };
 
     return {};
@@ -158,6 +145,7 @@ const send_ugc=(s_id,u_id,content)=>{
     if(isExist.isExist==true){
         //ugc.message ugc.image_byte
         space_pool[isExist.pos].space_ugc.push({username:log_service.get_name(u_id),user_id:u_id,space_id:s_id,ugc:content});
+
         return true;
     };
 
@@ -173,5 +161,8 @@ export default{
     delete_space,
     get_space_ugc,
     join_space,
-    send_ugc
+    send_ugc,
+    space_isExist,
+    isAdmin,
+    isSubUser
 }

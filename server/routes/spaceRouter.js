@@ -15,7 +15,7 @@ space_router.get("/request_campus",(req,res)=> space_control.request_campus(req,
 
 space_router.get("/join_campus",(req,res)=>space_control.join_campus(req,res));
 
-space_router.get("/request_campus_specific",(req,res)=>space_control.request_campus_specific(req,res));
+//space_router.get("/request_campus_specific",(req,res)=>space_control.request_campus_specific(req,res));
 
 space_router.post("/send_ugc", upload.single('image') ,(req,res)=>space_control.send_ugc(req,res));
 

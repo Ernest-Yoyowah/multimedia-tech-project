@@ -123,3 +123,20 @@ document.getElementById("uploadForm").addEventListener("submit", async (e) => {
 });
 
 ***************************************************************************************# end of check snippet*************************************************
+
+
+
+********************************* client side code to send image byte data through the socket***************
+const ws = new WebSocket("ws://localhost:8080");
+
+const fileInput = document.querySelector("#fileInput");
+fileInput.addEventListener("change", () => {
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        ws.send(reader.result); // Send binary data to the server
+    };
+
+    reader.readAsArrayBuffer(file);
+});
