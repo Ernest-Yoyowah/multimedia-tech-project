@@ -121,8 +121,8 @@ export default function GroupChatPage() {
             <Box
               sx={{
                 maxWidth: "70%",
-                backgroundColor:
-                  message.sender === currentUser ? "#0f7b6c" : "#242424",
+                // backgroundColor:
+                //   message.sender === currentUser ? "#0f7b6c" : "#242424",
                 padding: "10px",
                 borderRadius: "10px",
                 wordWrap: "break-word",
@@ -136,7 +136,14 @@ export default function GroupChatPage() {
                 />
               )}
               {message.text && (
-                <>
+                <Box
+                  sx={{
+                    backgroundColor:
+                      message.sender === currentUser ? "#0f7b6c" : "#242424",
+                    padding: "2px 20px 2px 10px",
+                    borderRadius: "0  15px 0",
+                  }}
+                >
                   <Typography
                     sx={{
                       color: message.sender === currentUser ? "pink" : "orange",
@@ -145,7 +152,7 @@ export default function GroupChatPage() {
                     {message.sender}
                   </Typography>
                   <Typography sx={{ color: "#fff" }}>{message.text}</Typography>
-                </>
+                </Box>
               )}
               <Typography
                 variant="caption"
@@ -162,6 +169,22 @@ export default function GroupChatPage() {
           </Box>
         ))}
         <div ref={chatEndRef}></div>
+        {/* Image Preview */}
+        {imagePreview && (
+          <Box
+            sx={{
+              padding: "10px",
+              textAlign: "center",
+              backgroundColor: "#242424",
+            }}
+          >
+            <img
+              src={imagePreview}
+              alt="Preview"
+              style={{ maxWidth: "100%", borderRadius: "8px" }}
+            />
+          </Box>
+        )}
       </Box>
 
       {/* Message Input */}
@@ -198,26 +221,6 @@ export default function GroupChatPage() {
           <SendIcon />
         </IconButton>
       </Box>
-
-      {/* Image Preview */}
-      {imagePreview && (
-        <Box
-          sx={{
-            padding: "10px",
-            textAlign: "center",
-            backgroundColor: "#242424",
-          }}
-        >
-          <Typography sx={{ color: "#fff", marginBottom: "10px" }}>
-            Preview:
-          </Typography>
-          <img
-            src={imagePreview}
-            alt="Preview"
-            style={{ maxWidth: "100%", borderRadius: "8px" }}
-          />
-        </Box>
-      )}
     </Box>
   );
 }
