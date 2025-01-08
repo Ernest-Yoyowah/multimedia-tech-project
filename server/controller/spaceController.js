@@ -28,9 +28,9 @@ const create_campus = (req,res) => {
         const fileBytes = req.file.buffer;
     };
 
-    const {space_name} = req.body;
+    const {space_name,description} = req.body;
 
-    let isCreated=space_operands.create_space(user_id,space_name,fileByte);
+    let isCreated=space_operands.create_space(user_id,space_name,description,fileByte);
 
     if(isCreated==true){
         return res.status(200).json({isCreated:isCreated});
