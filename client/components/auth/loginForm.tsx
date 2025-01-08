@@ -95,7 +95,7 @@ export default function LoginForm() {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         sx={{
           "& .MuiSnackbarContent-root": {
-            backgroundColor: "#333",
+            backgroundColor: "#E50914",
             color: "#fff",
           },
         }}
