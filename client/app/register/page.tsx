@@ -61,7 +61,6 @@ export default function Register() {
             Join Campus Connect today and unlock the opportunities that await.
           </Typography>
         </Box>
-
         <Box
           sx={{
             marginTop: 4,
