@@ -1,6 +1,6 @@
 import net from "./../global_dcl/base.js";
 
-const space_getter=async()=>{
+const request_campus=async()=>{
 
     try {
 
@@ -20,6 +20,4 @@ const space_getter=async()=>{
 
 };
 
-export default {
-    space_getter
-};
+export default request_campus

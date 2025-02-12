@@ -1,6 +1,6 @@
 import net from "./../global_dcl/base.js";
 
-const create_user=async(payload)=>{
+const newUser=async(payload)=>{
 
     try {
 
@@ -20,6 +20,4 @@ const create_user=async(payload)=>{
 
 };
 
-export default {
-    create_user
-};
+export default newUser

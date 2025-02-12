@@ -1,6 +1,6 @@
 import net from "./../global_dcl/base.js";
 
-const create=async(payload)=>{
+const create_campus=async(payload)=>{
 
     try {
 //set user id and to join id to the header from payload
@@ -20,6 +20,4 @@ const create=async(payload)=>{
 
 };
 
-export default {
-    create
-};
+export default create_campus;

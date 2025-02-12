@@ -1,6 +1,6 @@
 import net from "./../global_dcl/base.js";
 
-const get_user=async(payload)=>{
+const oldUser=async(payload)=>{
 
     try {
 
@@ -20,6 +20,4 @@ const get_user=async(payload)=>{
 
 };
 
-export default {
-    get_user
-};
+export default oldUser
