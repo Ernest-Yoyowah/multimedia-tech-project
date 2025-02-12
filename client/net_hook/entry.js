@@ -7,11 +7,11 @@ import request_campus from "./services/request_campus_trigger.js";
 class entry{
     constructor(){
 
-        this.joiner=join_campus();
-        this.creator=create_campus();
-        this.new_user=newUser();
-        this.old_user=oldUser();
-        this.request=request_campus();
+        this.joiner=join_campus;
+        this.creator=create_campus;
+        this.new_user=newUser;
+        this.old_user=oldUser;
+        this.request=request_campus;
 
     }
 
