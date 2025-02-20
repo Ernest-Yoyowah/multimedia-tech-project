@@ -5,7 +5,7 @@ import log_service from "./../service/logService.js"
 const ws = new WebSocket.Server({noServer:true});
 
 //ws - websocket, wsc - websocket client
-ws.on("connection",(request,wsc)=>{
+ws.on("connection",(wsc,request)=>{
 
     wsc.send(JSON.stringify({ status: "success", message: "connected to space" }));
 
